@@ -13,14 +13,14 @@ const listContacts = async () => {
   return JSON.parse(data);
 };
 
-const getById = async (contactId) => {
+const getById = async (id) => {
   const contacts = await listContacts();
-  return contacts.find((contact) => contact.id === contactId) || null;
+  return contacts.find((contact) => contact.id === id) || null;
 };
 
-const removeContact = async (contactId) => {
+const removeContact = async (id) => {
   const contacts = await listContacts();
-  const index = contacts.findIndex(contact => contact.id === contactId);
+  const index = contacts.findIndex((contact) => contact.id === id);
   if (index === -1) {
     return null;
   }
@@ -37,13 +37,13 @@ const addContact = async ({ name, email, phone }) => {
   return newContact;
 };
 
-const updateContactById = async (contactId, body) => {
+const updateContactById = async (id, body) => {
   const contacts = await listContacts();
-  const index = contacts.findIndex((contact) => contact.id === contactId);
+  const index = contacts.findIndex((contact) => contact.id === id);
   if (index === -1) {
     return null;
   }
-  contacts[index] = { contactId, ...body };
+  contacts[index] = {...contacts[index], ...body };
   await updateContacts(contacts);
   return contacts[index];
 };
